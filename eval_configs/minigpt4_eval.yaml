@@ -5,7 +5,7 @@ model:
   freeze_qformer: True
   max_txt_len: 160
   end_sym: "###"
-  low_resource: True
+  low_resource: False
   prompt_path: '' # "prompts/alignment.txt"
   prompt_template: '###Human: {} ###Assistant: '
   # ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_rack0/20230520190/checkpoint_4.pth'

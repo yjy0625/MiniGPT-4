@@ -109,7 +109,7 @@ class Workspace(object):
 @click.option('--input_dir', type=str)
 @click.option('--example_dir', type=str, default=None)
 @click.option('--prompt', type=str)
-@click.option('--cfg_path', type=str, default='eval_configs/minigpt4_eval.yaml')
+@click.option('--cfg_path', type=str, default='../eval_configs/minigpt4_eval.yaml')
 @click.option('--gpu_id', type=int, default=0)
 @click.option('--is_eval', is_flag=True)
 def main(input_dir, example_dir, prompt, cfg_path, gpu_id, is_eval):
