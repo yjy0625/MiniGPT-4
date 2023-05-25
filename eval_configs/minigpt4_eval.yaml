@@ -6,9 +6,10 @@ model:
   max_txt_len: 160
   end_sym: "###"
   low_resource: True
-  prompt_path: "prompts/alignment.txt"
+  prompt_path: '' # "prompts/alignment.txt"
   prompt_template: '###Human: {} ###Assistant: '
-  ckpt: '/path/to/pretrained/ckpt/'
+  # ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_rack0/20230520190/checkpoint_4.pth'
+  ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_rack25_r2/20230521004/checkpoint_9.pth'
 
 
 datasets:

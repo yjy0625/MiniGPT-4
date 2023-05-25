@@ -40,8 +40,11 @@ class CCSBUAlignDataset(CaptionDataset):
         image = self.vis_processor(image)
         caption = ann["caption"]
 
-        return {
+        ret = {
             "image": image,
             "text_input": caption,
             "image_id": self.img_ids[ann["image_id"]],
         }
+        if 'prompt' in ann:
+            ret['prompt'] = ann['prompt']
+        return ret

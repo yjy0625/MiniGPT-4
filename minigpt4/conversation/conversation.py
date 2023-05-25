@@ -42,6 +42,7 @@ class Conversation:
                     ret += role + ": " + message + self.sep
                 else:
                     ret += role + ":"
+            # print(f'prompt: {ret}')
             return ret
         elif self.sep_style == SeparatorStyle.TWO:
             seps = [self.sep, self.sep2]
@@ -117,7 +118,6 @@ CONV_VISION = Conversation(
 )
 
 
-
 class Chat:
     def __init__(self, model, vis_processor, device='cuda:0'):
         self.device = device
@@ -134,9 +134,9 @@ class Chat:
         else:
             conv.append_message(conv.roles[0], text)
 
-    def answer(self, conv, img_list, max_new_tokens=300, num_beams=1, min_length=1, top_p=0.9,
-               repetition_penalty=1.0, length_penalty=1, temperature=1.0, max_length=2000):
-        conv.append_message(conv.roles[1], None)
+    def compute_prob(self, conv, img_list, prefix=None, queries=None, query_index=0, max_new_tokens=300, num_beams=1, min_length=1, top_p=0.9,
+                     repetition_penalty=1.0, length_penalty=1, temperature=1.0, max_length=2000):
+        conv.append_message(conv.roles[1], prefix)
         embs = self.get_context_emb(conv, img_list)
 
         current_max_len = embs.shape[1] + max_new_tokens
@@ -158,6 +158,44 @@ class Chat:
             repetition_penalty=repetition_penalty,
             length_penalty=length_penalty,
             temperature=temperature,
+            output_scores=True,
+            return_dict_in_generate=True
+        )
+
+        query_tokens = self.model.llama_tokenizer(queries, add_special_tokens=False,
+                                                  return_tensors='pt').input_ids
+        scores = outputs['scores'][query_index].flatten()
+        # print(torch.where(scores != -torch.inf)[0])
+        non_inf = self.model.llama_tokenizer.decode(torch.where(scores != -torch.inf)[0],
+                                                    add_special_tokens=False)
+        print(f'Support: {non_inf}')
+        query_scores = outputs['scores'][query_index][0, query_tokens.flatten()]
+        return query_scores
+
+    def answer(self, conv, img_list, prefix=None, max_new_tokens=300, num_beams=1, min_length=1, top_p=0.9,
+               repetition_penalty=1.0, length_penalty=1, temperature=1.0, max_length=2000):
+        conv.append_message(conv.roles[1], prefix)
+        embs = self.get_context_emb(conv, img_list)
+
+        current_max_len = embs.shape[1] + max_new_tokens
+        if current_max_len - max_length > 0:
+            print('Warning: The number of tokens in current conversation exceeds the max length. '
+                  'The model will not see the contexts outside the range.')
+        begin_idx = max(0, current_max_len - max_length)
+
+        embs = embs[:, begin_idx:]
+
+        outputs = self.model.llama_model.generate(
+            inputs_embeds=embs,
+            max_new_tokens=max_new_tokens,
+            stopping_criteria=self.stopping_criteria,
+            num_beams=num_beams,
+            do_sample=True,
+            min_length=min_length,
+            top_p=top_p,
+            repetition_penalty=repetition_penalty,
+            length_penalty=length_penalty,
+            temperature=temperature
         )
         output_token = outputs[0]
         if output_token[0] == 0:  # the model might output a unknow token <unk> at the beginning. remove it
@@ -203,5 +241,3 @@ class Chat:
         mixed_embs = [emb for pair in zip(seg_embs[:-1], img_list) for emb in pair] + [seg_embs[-1]]
         mixed_embs = torch.cat(mixed_embs, dim=1)
         return mixed_embs
-
-
