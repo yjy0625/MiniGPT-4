@@ -31,6 +31,8 @@ from minigpt4.processors import *
 from minigpt4.runners import *
 from minigpt4.tasks import *
 
+torch.hub.set_dir('/iris/u/jingyuny/.cache/torch')
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Training")

@@ -8,9 +8,10 @@ model:
   low_resource: False
   prompt_path: '' # "prompts/alignment.txt"
   prompt_template: '###Human: {} ###Assistant: '
-  # ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_rack0/20230520190/checkpoint_4.pth'
-  ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_rack25_r2/20230521004/checkpoint_9.pth'
-
+  ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_weight2/20230622025/checkpoint_9.pth'
+  # ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_vase/20230619203/checkpoint_9.pth'
+  # ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_weight/20230619201/checkpoint_8.pth'
+  # ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_bench/20230620000/checkpoint_9.pth'
 
 datasets:
   cc_sbu_align:
