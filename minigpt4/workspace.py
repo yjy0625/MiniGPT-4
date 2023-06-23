@@ -68,14 +68,15 @@ class Workspace(object):
             assert ValueError('Input should not be empty.')
         self.chat.ask(user_message, self.chat_state)
 
-    def answer(self, prefix=None):
+    def answer(self, prefix=None, ensemble_index=0):
         llm_message = self.chat.answer(conv=self.chat_state,
                                        img_list=self.img_list,
                                        prefix=prefix,
                                        num_beams=self.num_beams,
                                        temperature=self.temperature,
                                        max_new_tokens=300,
-                                       max_length=3000)[0]
+                                       max_length=3000,
+                                       ensemble_index=ensemble_index)[0]
         return llm_message
 
     def compute_prob(self, queries, prefix=None, query_index=0):
@@ -90,12 +91,13 @@ class Workspace(object):
                                         max_length=3000)
         return scores
 
-    def run(self, img, prompt, examples=[], reset=True):
+    def run(self, img, prompt, examples=[], reset=True,
+            ensemble_index=0):
         if reset:
             self.reset(prompt, examples=examples)
         self.upload_img(img)
         self.ask(prompt)
-        output = self.answer()
+        output = self.answer(ensemble_index=ensemble_index)
         '''
         candidates = ['high', 'low'] # ['No', 'Yes']
         scores = self.compute_prob(candidates, prefix='The likelihood is', query_index=0)

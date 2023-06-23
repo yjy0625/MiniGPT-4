@@ -78,11 +78,13 @@ def main():
     # os.environ["NCCL_BLOCKING_WAIT"] = "1"
 
     # set before init_distributed_mode() to ensure the same job_id shared across all ranks.
+    args = parse_args()
     job_id = now()
 
-    cfg = Config(parse_args())
+    cfg = Config(args)
+    job_id = job_id + f'_seed{cfg.run_cfg.seed}'
 
-    init_distributed_mode(cfg.run_cfg)
+    # init_distributed_mode(cfg.run_cfg)
 
     setup_seeds(cfg)
 

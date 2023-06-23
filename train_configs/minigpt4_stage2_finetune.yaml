@@ -29,15 +29,15 @@ run:
   warmup_lr: 1e-6
 
   weight_decay: 0.05
-  max_epoch: 10
-  iters_per_epoch: 9000
+  max_epoch: 100
+  iters_per_epoch: 10000
   batch_size_train: 2
   batch_size_eval: 2
   num_workers: 4
   warmup_steps: 200
 
   seed: 42
-  output_dir: "output/minigpt4_stage2_finetune_bin20_weight2"
+  output_dir: "output/minigpt4_stage2_finetune_bin20_bench_0622"
 
   amp: True
   resume_ckpt_path: null
@@ -48,4 +48,4 @@ run:
   device: "cuda"
   world_size: 1
   dist_url: "env://"
-  distributed: True
+  distributed: False

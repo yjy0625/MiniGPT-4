@@ -39,6 +39,7 @@ class MiniGPT4(Blip2Base):
         end_sym='\n',
         low_resource=False,  # use 8 bit and put vit in cpu
         device_8bit=0,  # the device of 8bit model should be set when loading and cannot be changed anymore.
+        num_ensemble=-1
     ):
         super().__init__()
 
@@ -103,9 +104,18 @@ class MiniGPT4(Blip2Base):
             param.requires_grad = False
         print('Loading LLAMA Done')
 
+        self.num_ensemble = num_ensemble
         self.llama_proj = nn.Linear(
             self.Qformer.config.hidden_size, self.llama_model.config.hidden_size
         )
+        if num_ensemble != -1:
+            self.llama_projs = []
+            for i in range(num_ensemble):
+                self.llama_projs.append(nn.Linear(
+                    self.Qformer.config.hidden_size, self.llama_model.config.hidden_size
+                ))
+            self.llama_projs = nn.ModuleList(self.llama_projs)
+            self.ensemble_index = 0
         self.max_txt_len = max_txt_len
         self.end_sym = end_sym
 
@@ -143,7 +153,10 @@ class MiniGPT4(Blip2Base):
                 return_dict=True,
             )
 
-            inputs_llama = self.llama_proj(query_output.last_hidden_state)
+            if self.num_ensemble == -1:
+                inputs_llama = self.llama_proj(query_output.last_hidden_state)
+            else:
+                inputs_llama = self.llama_projs[self.ensemble_index](query_output.last_hidden_state)
             atts_llama = torch.ones(inputs_llama.size()[:-1], dtype=torch.long).to(image.device)
         return inputs_llama, atts_llama
 
@@ -244,6 +257,7 @@ class MiniGPT4(Blip2Base):
         max_txt_len = cfg.get("max_txt_len", 32)
         end_sym = cfg.get("end_sym", '\n')
 
+        num_ensemble = cfg.get("num_ensemble", -1)
         model = cls(
             vit_model=vit_model,
             q_former_model=q_former_model,
@@ -261,12 +275,20 @@ class MiniGPT4(Blip2Base):
             end_sym=end_sym,
             low_resource=low_resource,
             device_8bit=device_8bit,
+            num_ensemble=num_ensemble
         )
 
         ckpt_path = cfg.get("ckpt", "")  # load weights of MiniGPT-4
         if ckpt_path:
-            print("Load BLIP2-LLM Checkpoint: {}".format(ckpt_path))
-            ckpt = torch.load(ckpt_path, map_location="cpu")
-            msg = model.load_state_dict(ckpt['model'], strict=False)
+            if num_ensemble == -1:
+                print("Load BLIP2-LLM Checkpoint: {}".format(ckpt_path))
+                ckpt = torch.load(ckpt_path, map_location="cpu")
+                msg = model.load_state_dict(ckpt['model'], strict=False)
+            else:
+                # load checkpoints for each projection layer
+                for i, path in enumerate(ckpt_path.split(',')):
+                    ckpt = torch.load(ckpt_path, map_location="cpu")
+                    model.load_state_dict(ckpt['model'], strict=False)
+                    model.llama_projs[i].load_state_dict(model.llama_proj.state_dict())
 
         return model

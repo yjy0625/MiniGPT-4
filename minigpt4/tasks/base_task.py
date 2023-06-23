@@ -188,7 +188,7 @@ class BaseTask:
                 epoch, iters_per_epoch
             )
         )
-        header = "Train: data epoch: [{}]".format(epoch)
+        header = "[{}] Train: data epoch: [{}]".format(os.getpid(), epoch)
         if start_iters is None:
             # epoch-based runner
             inner_epoch = epoch

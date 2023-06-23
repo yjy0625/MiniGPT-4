@@ -2,4 +2,4 @@ datasets:
   cc_sbu_align:
     data_type: images
     build_info:
-      storage: /iris/u/jingyuny/projects/p_bridge/data/nlp/minigpt4/bin20_weight
+      storage: /iris/u/jingyuny/projects/p_bridge/data/nlp/minigpt4/bin20_bench_0622

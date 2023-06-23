@@ -8,10 +8,10 @@ model:
   low_resource: False
   prompt_path: '' # "prompts/alignment.txt"
   prompt_template: '###Human: {} ###Assistant: '
-  ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_weight2/20230622025/checkpoint_9.pth'
-  # ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_vase/20230619203/checkpoint_9.pth'
-  # ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_weight/20230619201/checkpoint_8.pth'
-  # ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_bench/20230620000/checkpoint_9.pth'
+  num_ensemble: 5
+  ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_weight_0622/20230623035344_seed1/checkpoint_10.pth,/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_weight_0622/20230623035344_seed2/checkpoint_10.pth,/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_weight_0622/20230623035348_seed3/checkpoint_10.pth,/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_weight_0622/20230623035348_seed4/checkpoint_10.pth,/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_weight_0622/20230623033943_seed5/checkpoint_10.pth'
+  # ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_vase_0622/20230623035906_seed1/checkpoint_10.pth,/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_vase_0622/20230623035914_seed2/checkpoint_10.pth,/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_vase_0622/20230623040230_seed3/checkpoint_10.pth,/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_vase_0622/20230623040238_seed4/checkpoint_10.pth,/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_vase_0622/20230623040125_seed5/checkpoint_10.pth'
+  # ckpt: '/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_bench_0622/20230623040728_seed1/checkpoint_10.pth,/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_bench_0622/20230623040537_seed5/checkpoint_10.pth,/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_bench_0622/20230623040527_seed4/checkpoint_10.pth,/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_bench_0622/20230623040516_seed3/checkpoint_10.pth,/iris/u/jingyuny/projects/p_bridge/MiniGPT-4/minigpt4/output/minigpt4_stage2_finetune_bin20_bench_0622/20230623040515_seed2/checkpoint_10.pth'
 
 datasets:
   cc_sbu_align:
