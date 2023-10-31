@@ -164,7 +164,7 @@ class BaseTask:
         start_iters=None,
         log_freq=50,
         cuda_enabled=False,
-        accum_grad_iters=1,
+        accum_grad_iters=1
     ):
         """
         An inner training loop compatible with both epoch-based and iter-based training.
@@ -228,8 +228,8 @@ class BaseTask:
             if (i + 1) % accum_grad_iters == 0:
                 if use_amp:
                     scaler.step(optimizer)
-                    scaler.update()                     
-                else:    
+                    scaler.update()
+                else:
                     optimizer.step()
                 optimizer.zero_grad()
 

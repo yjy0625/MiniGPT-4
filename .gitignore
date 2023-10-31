@@ -1,2 +1,5 @@
 *.egg-info/
 minigpt4/output
+**/__pycache__/
+sbatch_logs/
+*.sh

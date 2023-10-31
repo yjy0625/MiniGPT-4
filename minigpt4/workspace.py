@@ -27,7 +27,6 @@ from minigpt4.runners import *
 from minigpt4.tasks import *
 
 
-torch.hub.set_dir('/iris/u/jingyuny/.cache/torch')
 minigpt4_cfg_path = os.path.join(os.path.dirname(__file__), '../eval_configs/minigpt4_eval.yaml')
 
 

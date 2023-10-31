@@ -7,8 +7,7 @@ model:
   end_sym: "###"
   prompt_path: "prompts/alignment.txt"
   prompt_template: '###Human: {} ###Assistant: '
-  ckpt: '/iris/u/jingyuny/projects/p_bridge/data/nlp/pretrained_minigpt4_7b_stage1.pth'
-
+  ckpt: "insert path to pre-trained minigpt4 checkpoint here"
 
 datasets:
   cc_sbu_align:
@@ -29,7 +28,7 @@ run:
   warmup_lr: 1e-6
 
   weight_decay: 0.05
-  max_epoch: 100
+  max_epoch: 21
   iters_per_epoch: 10000
   batch_size_train: 2
   batch_size_eval: 2
@@ -37,12 +36,12 @@ run:
   warmup_steps: 200
 
   seed: 42
-  output_dir: "output/minigpt4_stage2_finetune_bin20_bench_0622"
+  output_dir: "output/sim_weight"
 
   amp: True
   resume_ckpt_path: null
 
-  evaluate: False 
+  evaluate: false
   train_splits: ["train"]
 
   device: "cuda"

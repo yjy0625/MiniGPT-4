@@ -287,7 +287,7 @@ class MiniGPT4(Blip2Base):
             else:
                 # load checkpoints for each projection layer
                 for i, path in enumerate(ckpt_path.split(',')):
-                    ckpt = torch.load(ckpt_path, map_location="cpu")
+                    ckpt = torch.load(path, map_location="cpu")
                     model.load_state_dict(ckpt['model'], strict=False)
                     model.llama_projs[i].load_state_dict(model.llama_proj.state_dict())
 
