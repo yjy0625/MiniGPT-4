@@ -30,13 +30,6 @@ vicuna_weights
 Then, set the path to the vicuna weight in the model config file 
 [here](minigpt4/configs/models/minigpt4.yaml#L16) at Line 16.
 
-**3. Prepare the pretrained MiniGPT-4 checkpoint**
-
-Download the pretrained MiniGPT-4 checkpoint using the following [link](https://drive.google.com/file/d/1RY9jV0dyqLX-o38LrumkKRh6Jtaop58R/view?usp=sharing).
-
-Then, set the path to the pretrained checkpoint in the evaluation config file 
-in [eval_configs/minigpt4_eval.yaml](eval_configs/minigpt4_eval.yaml#L13) at Line 13. 
-
 ## Fine-tuning MiniGPT 4 on a Dataset
 
 In the RoboFuME work, we use a small high quality image-reward pair dataset created from the prior and target demo data
@@ -58,7 +51,8 @@ This command will generate fine-tuning data in the specified output directory.
 ### Running MiniGPT-4 Fine-tuning
 
 To launch the second stage alignment, 
-first specify the path to the checkpoint file trained in stage 1 in line 10 of
+download the pretrained MiniGPT-4 checkpoint using the following [link](https://drive.google.com/file/d/1RY9jV0dyqLX-o38LrumkKRh6Jtaop58R/view?usp=sharing) and then
+specify the path to the checkpoint file in line 10 of
 [train_configs/minigpt4_stage1_pretrain.yaml](train_configs/minigpt4_stage2_finetune.yaml).
 You can also specify the output path in line 39.
 Then, run the following command. In our experiments, we find that we need a GPU that has at least 24GB memory.
@@ -71,7 +65,14 @@ After the second stage alignment, the fine-tuned VLM model will be able to act a
 
 ### Running MiniGPT-4 Server for RL Fine-tuning
 
-Please refer to the readme of the RoboFuME repo for instructions related to running RL fine-tuning.
+First, set the path to the fine-tuned model checkpoint in the evaluation config file
+in [eval_configs/minigpt4_eval.yaml](eval_configs/minigpt4_eval.yaml#L13) at Line 13.
+
+Then, to start the VLM server for the simulated weight task, run the following command in `robofume/scripts/minigpt`:
+
+```
+python minigpt_server.py --env_name sim_weight --mode single --model_type vlm --port 5010
+```
 
 ## License
 This repository is under [BSD 3-Clause License](LICENSE.md).
