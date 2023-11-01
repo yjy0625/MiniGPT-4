@@ -35,7 +35,7 @@ Then, set the path to the vicuna weight in the model config file
 Download the pretrained MiniGPT-4 checkpoint using the following [link](https://drive.google.com/file/d/1RY9jV0dyqLX-o38LrumkKRh6Jtaop58R/view?usp=sharing).
 
 Then, set the path to the pretrained checkpoint in the evaluation config file 
-in [eval_configs/minigpt4_eval.yaml](eval_configs/minigpt4_eval.yaml#L10) at Line 13. 
+in [eval_configs/minigpt4_eval.yaml](eval_configs/minigpt4_eval.yaml#L13) at Line 13. 
 
 ## Fine-tuning MiniGPT 4 on a Dataset
 
