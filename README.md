@@ -53,8 +53,9 @@ This command will generate fine-tuning data in the specified output directory.
 To launch the second stage alignment, 
 download the pretrained MiniGPT-4 checkpoint using the following [link](https://drive.google.com/file/d/1RY9jV0dyqLX-o38LrumkKRh6Jtaop58R/view?usp=sharing) and then
 specify the path to the checkpoint file in line 10 of
-[train_configs/minigpt4_stage1_pretrain.yaml](train_configs/minigpt4_stage2_finetune.yaml).
+[train_configs/minigpt4_stage1_pretrain.yaml](train_configs/minigpt4_stage2_finetune.yaml#L10).
 You can also specify the output path in line 39.
+After specifying the pre-trained checkpoint file, enter the directory to stored MiniGPT-4 fine-tuning data in line 5 of [minigpt4/configs/datasets/cc_sbu/align.yaml](minigpt4/configs/datasets/cc_sbu/align.yaml#L5)
 Then, run the following command. In our experiments, we find that we need a GPU that has at least 24GB memory.
 
 ```bash
